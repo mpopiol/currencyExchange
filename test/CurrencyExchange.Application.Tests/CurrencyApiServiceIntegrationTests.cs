@@ -167,13 +167,16 @@ namespace CurrencyExchange.Application.Tests
             var mockConfig = new Mock<ICacheConfiguration>();
 
             mockConfig.Setup(config => config.IsEnabled).Returns(isEnabled);
+            mockConfig.Setup(config => config.ExpirationScanFrequency).Returns(TimeSpan.FromSeconds(5));
+            mockConfig.Setup(config => config.SlidingEntryExpiration).Returns(TimeSpan.FromSeconds(10));
+            mockConfig.Setup(config => config.MaxCachedQueries).Returns(int.MaxValue);
 
             return mockConfig.Object;
         }
 
         private static ICurrencyRateCache GetCurrencyRateCache()
         {
-            return new CurrencyRateCache();
+            return new CurrencyRateCache(GetCacheConfigMock(true));
         }
 
         private static IMissingDataService GetMissingDataService()

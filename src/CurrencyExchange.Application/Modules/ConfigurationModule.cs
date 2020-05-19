@@ -2,6 +2,7 @@
 using CurrencyExchange.Application.Configuration;
 using CurrencyExchange.Application.Enums;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace CurrencyExchange.Application.Modules
 {
@@ -53,6 +54,12 @@ namespace CurrencyExchange.Application.Modules
         private class CacheConfiguration : ICacheConfiguration
         {
             public bool IsEnabled { get; set; }
+
+            public TimeSpan SlidingEntryExpiration { get; set; }
+
+            public TimeSpan ExpirationScanFrequency { get; set; }
+
+            public long? MaxCachedQueries { get; set; }
         }
 
         private class SdmxApiConfiguration : ISdmxApiConfiguration
